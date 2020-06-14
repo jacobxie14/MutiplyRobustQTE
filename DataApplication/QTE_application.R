@@ -117,7 +117,7 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   #uniroot(ocm3,interval=c(-10,15))$root
   
 
-  
+  #mean balance conditions
   G1.i<-ps1$fitted.values
   mG1<-sum(G1.i)/n
   G2.i<-ps2$fitted.values
@@ -173,7 +173,10 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   return(q_w)
   
 }
-
+#bsc function: from Dr. Zhiwei Zhang's source code for his biometric paper
+#Causal inference on quantiles with an obstetric application
+#Z Zhang, Z Chen, JF Troendle, J Zhang
+#Biometrics 68 (3), 697-706
 bsc <- function (t, t0, itmax=100) {
   lo <- 1
   hi <- length(t)
@@ -195,7 +198,10 @@ bsc <- function (t, t0, itmax=100) {
   mid.hi
 }
 
-# weighted quantiles
+# weighted quantiles estimation function: from Dr. Zhiwei Zhang's source code for his biometric paper
+#Causal inference on quantiles with an obstetric application
+#Z Zhang, Z Chen, JF Troendle, J Zhang
+#Biometrics 68 (3), 697-706
 wtd.quantile <- function (y, weights, probs, normwt=TRUE) {
   od <- order(y)
   yo <- y[od]
