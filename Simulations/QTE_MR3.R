@@ -34,7 +34,7 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   #q0<-quantile(data$y[data$z==0],0.5)
   lb <- min(as.numeric(model.X1%*%beta1))+qnorm(prob)
   ub <- max(as.numeric(model.X1%*%beta1))+qnorm(prob)
-  q_1<-uniroot(ocm1,interval=c(lb,ub))$root
+  q_1<-uniroot(ocm1,interval=c(lb,ub))$root#naive quantile
   #uniroot(ocm1,interval=c(-10,15))$root
   #outcome model 2
   ocm2<-function(x){
@@ -44,7 +44,9 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   #q0<-quantile(data$y[data$z==0],0.5)
   lb <- min(as.numeric(model.X2%*%beta2))+qnorm(prob)
   ub <- max(as.numeric(model.X2%*%beta2))+qnorm(prob)
-  q_2<-uniroot(ocm2,interval=c(lb,ub))$root
+  q_2<-uniroot(ocm2,interval=c(lb,ub))$root#naive quantile
+  
+  #mean balancing conditions on propensity scores and outcome regression
   G1.i<-pnorm(q_1-as.numeric(model.X1%*%beta1))
   mG1<-sum(G1.i)/n
   G2.i<-pnorm(q_2-as.numeric(model.X2%*%beta2))
@@ -53,7 +55,7 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   mG3<-sum(G3.i)/n
   G4.i<-ps2$fitted.values
   mG4<-sum(G4.i)/n
-  
+  ########################################optimization function H for different MR estimators
   ########################################MR with 0011
   LG_0011<-function(r){
     # G1.i<-pnorm(q_1-as.numeric(model.X1%*%beta1))
