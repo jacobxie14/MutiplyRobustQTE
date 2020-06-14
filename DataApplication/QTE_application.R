@@ -235,7 +235,6 @@ for (i in 1:length(p)){
     
 }
 
-save(dr1,dr2,dr3,qte,file="other_quantiles.Rdata")
 
 n<-dim(bweight2)[1]
 QTE_boot<-function(id,x,prob=0.5,ToC){
@@ -270,21 +269,11 @@ for (i in 1:length(p)){
 save(q,QTE_q1,QTE_q0,file="QTE_allp.Rdata")
 
 
-system.time(QTE_q1<-parApply(cl,ID,1,QTE_boot,bweight2,prob=0.25,ToC=1))
-system.time(QTE_q0<-parApply(cl,ID,1,QTE_boot,bweight2,prob=0.25,ToC=0))
+system.time(QTE_q1<-parApply(cl,ID,1,QTE_boot,bweight2,prob=0.5,ToC=1))
+system.time(QTE_q0<-parApply(cl,ID,1,QTE_boot,bweight2,prob=0.5,ToC=0))
 QTE<-QTE_q1-QTE_q0
-save(QTE,QTE_q1,QTE_q0,file="/u5/y63xie/MacProfile/project3/data_application/QTE_0.25.Rdata")
+save(QTE,QTE_q1,QTE_q0,file="/u5/y63xie/MacProfile/project3/data_application/QTE_0.5.Rdata")
 
 
 
-x1=data.frame(G1.i,G2.i,G3.i)
-pairs(x1)
 
-x2=data.frame(G4.i,G5.i,G6.i)
-pairs(x2)
-
-x3=data.frame(G7.i,G8.i,G9.i)
-pairs(x3)
-
-x4=data.frame(G3.i,G6.i,G9.i)
-pairs(x4)
