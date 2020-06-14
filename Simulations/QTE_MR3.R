@@ -3,7 +3,7 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   
   data<-as.data.frame(data)
   y1<-data$y1;y0<-data$y0
-  data<-data[,-c(11,12)]
+  data<-data[,-c(11,12)]#remove potential outcomes
   n<-dim(data)[1];n1<-sum(data$z)
   n0<-n-n1
   if(ToC==1){
@@ -55,7 +55,7 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   mG3<-sum(G3.i)/n
   G4.i<-ps2$fitted.values
   mG4<-sum(G4.i)/n
-  ########################################optimization function H for different MR estimators
+  ########################################optimization function for different MR estimators
   ########################################MR with 0011
   LG_0011<-function(r){
     # G1.i<-pnorm(q_1-as.numeric(model.X1%*%beta1))
@@ -149,6 +149,11 @@ QTE_MR<-function(data,ToC=1,prob=0.5){
   
 }
 
+#bsc function: from Dr. Zhiwei Zhang's source code for his biometric paper
+#Causal inference on quantiles with an obstetric application
+#Z Zhang, Z Chen, JF Troendle, J Zhang
+#Biometrics 68 (3), 697-706
+
 bsc <- function (t, t0, itmax=100) {
   lo <- 1
   hi <- length(t)
@@ -170,7 +175,11 @@ bsc <- function (t, t0, itmax=100) {
   mid.hi
 }
 
-# weighted quantiles
+# weighted quantile estimation function: from Dr. Zhiwei Zhang's source code for his biometric paper
+#Causal inference on quantiles with an obstetric application
+#Z Zhang, Z Chen, JF Troendle, J Zhang
+#Biometrics 68 (3), 697-706
+
 wtd.quantile <- function (y, weights, probs, normwt=TRUE) {
   od <- order(y)
   yo <- y[od]
